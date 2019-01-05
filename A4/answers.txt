@@ -1,0 +1,20 @@
+Answers for Evgeni (Eugene) Borissov for CMPT732.    
+
+1. How much of a difference did the .cache() make in your Reddit ETL code?
+
+Running reddit-2 on my laptop the running time was 18.5 seconds without caching, and 12.5 seconds with caching.  A difference of 6 seconds.
+
+
+2. When would .cache() make code slower than without?
+
+When something doesn't have to be calculated more than once.
+
+
+3. Under what conditions will the broadcast join be faster than an actual join?
+
+When one of the tables that are being joined is small.
+
+
+4. When will the broadcast join be slower?
+
+When both tables are large.

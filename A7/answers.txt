@@ -1,0 +1,32 @@
+Answers for Evgeni (Eugene) Borissov for CMPT732.    
+
+
+1. What happened when you inserted another row with the same primary key as an existing row?
+
+The tuple data was overwritten with the new data.  
+
+
+2. What happened when you query a keyspace with replication factor 1 and one node down? How did it behave with replication factor 2 and a node down?
+
+With replication factor 1 the query cannot be performed.  When the replication factor is 2 the query works.
+
+
+4. How did the consistency level affect the results with the node up/down?
+
+When the node is down, new records added when the node was down all show up.  New records added when the node was up don't all show up with consistency one because those may have been stored on the down node.
+
+
+5. Which of the WHERE id=? values returned successfully with CONSISTENCY ALL when one of the nodes was down? Why do you think some could be returned but not others?
+
+All were returned except id=3.
+
+
+6. What was the CREATE TABLE statement you used for the nasalogs table? What was the primary key you choose, and why?
+
+I used "CREATE TABLE nasalogs (host TEXT, id TEXT, bytes INTEGER, PRIMARY KEY (host, id));".  I chose the primary key to be (host, id), where host is listed first, so that the same hosts are stored on the same node.
+
+
+7. What was the CQL query you used (or tried) to get the total number of bytes?
+
+"SELECT sum(bytes) FROM nasalogs;".
+

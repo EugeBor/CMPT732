@@ -1,0 +1,41 @@
+Answers for Evgeni (Eugene) Borissov for CMPT732.    
+
+1. What is your best guess for the slope and intercept of the streaming points being produced?
+
+alpha = 45.6, beta = -51.3
+
+
+2. Is your streaming program's estimate of the slope and intercept getting better as the program runs? (That is: is the program aggregating all of the data from the start of time, or only those that have arrived since the last output?)
+
+Yes, it's aggregating.
+
+
+3. In the colour classification question, what were your validation scores for the RGB and LAB pipelines?
+
+R**2 of about 0.6 for RGB, and about 0.7 for LAB.
+
+
+4. When predicting the tmax values, did you over-fit the training data (and for which training/validation sets)?
+
+Features: R**2
+"latitude", "longitude", "elevation": train = 0.87, validation = 0.83
+"latitude", "longitude", "elevation", "day": train = 0.90, validation = 0.80
+"latitude", "longitude", "elevation", "day", "tmax_yesterday": train = 0.94, validation = 0.91
+
+Based on the difference between the R**2 of the training and validation sets, the model with features "latitude", "longitude", "elevation", "day" seems to overfit the data, but the other models don't overfit.
+
+
+5. What were your testing scores for your model with and without the “yesterday's temperature” feature?
+
+"latitude", "longitude", "elevation": train = 0.87, validation = 0.83
+"latitude", "longitude", "elevation", "day": train = 0.90, validation = 0.80
+"latitude", "longitude", "elevation", "day", "tmax_yesterday": train = 0.94, validation = 0.91
+
+
+6. If you're using a tree-based model, you'll find a .featureImportances property that describes the relative importance of each feature (code commented out in weather_test.py; if not, skip this question). Have a look with and without the “yesterday's temperature” feature: do the results make sense and suggest that your model is making decisions reasonably? With “yesterday's temperature”, is it just predicting “same as yesterday”?
+
+Features: "latitude", "longitude", "elevation", "day", "tmax_yesterday"
+Without: [0.215168295123,0.129230731211,0.137567178184,0.518033795483]
+With: [0.183944539358,0.0753665536851,0.0889253626327,0.172923646251,0.478839898073]
+
+When adding yesterday's temperature, the impact of all features decreases, and about half of the prediction is based on yesterday's temperature; this seems reasonable because the maximum temperature usually doesn't change very much from day day to the next.

@@ -1,0 +1,33 @@
+Answers for Evgeni (Eugene) Borissov for CMPT732.    
+
+1. In the Reddit averages execution plan, which fields were loaded? How was the average computed (and was a combiner-like step done)?
+
+The 'subreddit' field and 'score' field were loaded. Yes, a combiner-like step was done.
+
+
+2. What was the running time for your Reddit averages implementations in the five scenarios described above? How much difference did Python implementation make (PyPy vs the default CPython)? Why was it large for RDDs but not for DataFrames?
+
+Running times on reddit-5 dataset:
+
+MapReduce: 2m7s
+RDD/Python3: 3m19s
+RDD/PyPy: 2m0s
+DataFrames/Python3: 1m40s
+DataFrames/PyPy: 0m55s
+
+The difference is not as great with DataFrames because we are using the DataFrames own functions, rather than Python functions, which is where the gains of PyPy lie.
+
+
+3. How much of a difference did the broadcast hint make to the Wikipedia popular code's running time (and on what data set)?
+
+Running the code on the cluster on dataset "pagecounts-1", the running time decreased by about 5 seconds when using broadcast.  
+
+
+4. How did the Wikipedia popular execution plan differ with and without the broadcast hint?
+
+The difference with the broadcast hint is that the number of steps in the execution decreased.
+
+
+5. For the weather data question, did you prefer writing the “DataFrames + Python methods” style, or the “temp tables + SQL syntax” style form solving the problem? Which do you think produces more readable code?
+
+I think SQL is easier to write, but DataFrames easier to read. I began to prefer DataFrames once I became more familiar with it.

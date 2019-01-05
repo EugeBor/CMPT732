@@ -1,0 +1,38 @@
+Answers for Evgeni (Eugene) Borissov for CMPT732.    
+
+1. What did you see in the execution plan for the “join in Spark” solution? Why was the execution so fast (and the memory usage so small)?
+
+The execution is so fast because the filter is performed before the join, so the join isn't so expensive.
+
+2. What was the CREATE TABLE statement you used for the orders_parts table?
+
+CREATE TABLE orders_parts (
+  orderkey int,
+  custkey int,
+  orderstatus text,
+  totalprice decimal,
+  orderdate date,
+  order_priority text,
+  clerk text,
+  ship_priority int,
+  comment text,
+  part_names set<text>,
+  PRIMARY KEY (orderkey)
+);
+
+
+3. What were the running times of the two tpch_orders_* programs on the tpch2 data on the cluster? These orderkeys have results in that data set: 2579142 2816486 586119 441985 2863331.
+
+Not denormalized: 
+real	0m58.096s
+user	0m49.148s
+sys	0m3.224s
+
+Denormalized:
+real	0m52.505s
+user	0m36.936s
+sys	0m2.256s
+
+4. Consider the logic that you would have to implement to maintain the denormalized data (assuming that the orders table had the part_names column in the main data set). Write a few sentences on what you'd have to do when inserting/updating/deleting data in this case.
+
+When inserting a new order the part names associated with that order would have to be added to the part_names field. When updating a part name, all orders with that part would have to have the part_names field updated. When deleting a part, it may be or may not be necessary to delete the part from the part_names field, this would depend on the purpose for which this field is being used.

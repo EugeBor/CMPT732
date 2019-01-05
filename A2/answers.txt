@@ -1,0 +1,24 @@
+Answers for Evgeni (Eugene) Borissov for CMPT732.    
+
+
+1. In the WikipediaPopular class, it would be much more interesting to find the page that is most popular, not just the view count (as we did with Spark). What would be necessary to modify your class to do this? (You don't have to actually implement it.)
+
+Answer: You would have to change the mapper out be the page name and views (like LongPairWritable, but where one value is a long and the other a string, call it a StringLongPairWritable). This would be the iterable used in the reducer. When running the reducer, we would only compare the views, and if the views are the max, we would store the views and the page.
+
+
+2. An RDD has many methods: it can do many more useful tricks than were at hand with MapReduce. Write a sentence or two to explain the difference between .map and .flatMap. Which is more like the MapReduce concept of mapping?
+
+Answer: The key difference is that .map produces one output item for each input item, whereas .flatMap produces >=0 output items for each input item.  Which function is more similar to MapReduce depends on what our program is doing; for example, .map is more similar to MapReduce in WordCount, however, .flatMap is more similar to MapReduce in RedditAverage.
+
+
+
+3. Do the same for .reduce and .reduceByKey. Which is more like the MapReduce concept of reducing?
+
+Answer: The .reduceByKey operation performs an operation on an input set where the key's of the inputs are the same, whereas .reduce performs the operation on the entire input set.  As such, reduceByKey is more similar to the MapReduce concept of reducing.
+
+
+
+4. When finding popular Wikipedia pages, the maximum number of page views is certainly unique, but the most popular page might be a tie. What would your improved Python implementation do if there were two pages with the same highest number of page views in an hour? What would be necessary to make your code find all of the pages views the maximum number of times? (Again, you don't have to actually implement this.)
+
+Answer: The improved Python implementation would select the page listed first in the input file (lowest row number) as the one with the maximum, and ignore pages with the same number of views (not show their page name in the output). There are several ways to find all pages. One way to do it is to create an array that maintains the page names of the pages that have the maximum hits; when the maximum changes, the array is reset to only include the page name that resulted in an increase in the max views, and if the views is equal to the max, the page name is added to the array.
+

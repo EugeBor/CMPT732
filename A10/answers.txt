@@ -1,0 +1,15 @@
+Answers for Evgeni (Eugene) Borissov for CMPT732.    
+
+1. What happened to the HDFS file when one of the nodes it was stored on failed?
+
+It waits some time (30s to 1min+), and makes a 3rd copy on the node that didn't previously have a copy (because it wants to store on 3 nodes).  The goal is to have 0 number of under-replicated blocks, and it will try to do this, if possible.
+
+
+2. How did YARN/MapReduce behave when one of the compute nodes disappeared?
+
+It exited the tasks on the failed node, saying "Exit status: -100". The tasks being performed on the failed node had to be restarted and performed by the other nodes.
+
+
+3. Were there more things you'd like to try with this cluster, or anything you did try that you think should have been in this assignment?
+
+This was a good assignment! I think it covered the key points of failure.
